@@ -7,7 +7,7 @@ public class Ex001 {
     static List<List<Integer>> result;
 
     public static void main(String[] args) {
-        String mainExp = "3?+3?=69";
+        String mainExp = "?00+?0=?30";
         mainExp = mainExp.replace(" ", "");
         char[] charExp = mainExp.toCharArray();
         List<Integer> indexExp = new ArrayList<>();
@@ -24,15 +24,20 @@ public class Ex001 {
                 charExp[indexExp.get(j)] = Character.forDigit(combExp.get(i).get(j), 10);
             }
             String resExp = new String(charExp);
-            resExp = resExp.replace("+", "=");
+            String tempResExp = resExp.replace("+", "=");
             int antiZero = 0;
-            for (int v = 0; v < resExp.length() - 1; v++) {
-                if (resExp.charAt(0) == '0' || resExp.charAt(v) == '=' && resExp.charAt(v + 1) == '0') {
+            for (int v = 1; v < tempResExp.length() - 2; v++) {
+                if (tempResExp.charAt(0) == '0' && tempResExp.charAt(1) != '='
+                        || tempResExp.charAt(v) == '=' && tempResExp.charAt(v + 1) == '0'
+                                && tempResExp.charAt(v + 2) != '='
+                        || tempResExp.charAt(v) == '='
+                                && tempResExp.charAt(tempResExp.length() - 1) == '0'
+                                && tempResExp.length() - v - 1 == 1) {
                     antiZero++;
                 }
             }
             if (antiZero == 0) {
-                String[] numExp = resExp.split("=");
+                String[] numExp = tempResExp.split("=");
                 int q = Integer.parseInt(numExp[0]);
                 int w = Integer.parseInt(numExp[1]);
                 int e = Integer.parseInt(numExp[2]);
